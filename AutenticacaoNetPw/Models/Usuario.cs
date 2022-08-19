@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MySql.Data.MySqlClient;
 
 namespace AutenticacaoNetPw.Models
 {
@@ -34,6 +36,19 @@ namespace AutenticacaoNetPw.Models
             [DataType(DataType.Password)]
             public string ConfirmaSenha { get; set; }
 
+        MySqlConnection conexao = new MySqlConnection(ConfigurationManager.ConnectionStrings["conexao"].ConnectionString);
+        MySqlCommand command = new MySqlCommand();
         
+        public void InsertUsuario(Usuario usuario)
+        {
+            conexao.Open();
+            command.CommandText = "call InsertUsu(@UsuNome, @Login, @Senha);";
+            command.Parameters.Add("@UsuNome", MySqlDbType.VarChar).Value = usuario.UsuNome;
+            command.Parameters.Add("@Login", MySqlDbType.VarChar).Value = usuario.Login;
+            command.Parameters.Add("@Senha", MySqlDbType.VarChar).Value = usuario.Senha;
+            command.Connection = conexao;
+            command.ExecuteNonQuery();
+            conexao.Close();
+        }
     }
 }
