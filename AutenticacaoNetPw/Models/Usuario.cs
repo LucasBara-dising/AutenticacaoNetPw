@@ -50,5 +50,17 @@ namespace AutenticacaoNetPw.Models
             command.ExecuteNonQuery();
             conexao.Close();
         }
+        public string SelectLogin(string vLogin)
+        {
+            conexao.Open();
+            command.CommandText = "call SelectLogin(@Login);";
+            command.Parameters.Add("@Login", MySqlDbType.VarChar).Value = vLogin;
+            command.Connection = conexao;
+            string Login = (string)command.ExecuteScalar();
+            conexao.Close();
+            if (Login == null)
+                Login = "";
+            return Login;
+        }
     }
 }

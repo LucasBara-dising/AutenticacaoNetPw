@@ -18,7 +18,17 @@ namespace AutenticacaoNetPw.Controllers
         [HttpPost]
         public ActionResult Insert(CadastroUsuarioViewModel viewmodel)
         {
-            return View();
+            if (!ModelState.IsValid)
+                return View(viewmodel);
+            Usuario novousuario = new Usuario
+            {
+                UsuNome = viewmodel.UsuNome,
+                Login = viewmodel.Login,
+                Senha = viewmodel.Senha,
+            };
+            novousuario.InsertUsuario(novousuario);
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

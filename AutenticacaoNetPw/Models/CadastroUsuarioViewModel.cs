@@ -16,7 +16,7 @@ namespace AutenticacaoNetPw.Models
 
         [Required(ErrorMessage = "Informe o login")]
         [MaxLength(50, ErrorMessage = "o login deve conter no maximo 50 caracteres")]
-        [Remote("Action", "Autentifiacao", ErrorMessage = "O login já existe")]
+        //[Remote("Action", "Autentifiacao", ErrorMessage = "O login já existe")]
         public string Login { get; set; }
 
 
