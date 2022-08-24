@@ -20,10 +20,14 @@
                 </button>
                 @Html.ActionLink("Nome do aplicativo", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
+
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Página Inicial", "Index", "Home")</li>
                     <li>@Html.ActionLink("Adicionar", "Insert", "Autenticacao")</li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("Cadastre-se", "Insert", "Autenticacao")</li>
                 </ul>
             </div>
         </div>

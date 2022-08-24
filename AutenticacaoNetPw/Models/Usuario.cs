@@ -62,5 +62,35 @@ namespace AutenticacaoNetPw.Models
                 Login = "";
             return Login;
         }
+        public Usuario SelectUsuario(string vLogin)
+        {
+            conexao.Open();
+            command.CommandText = "call SelectUser(@Login);";
+            command.Parameters.Add("@Login", MySqlDbType.VarChar).Value = vLogin;
+            command.Connection = conexao;
+            var readUsuario = command.ExecuteReader();
+            var TempUsuario = new Usuario();
+
+            if (readUsuario.Read())
+            {
+                TempUsuario.UsuarioID = int.Parse(readUsuario["Usuario"].ToString());
+                TempUsuario.UsuNome = readUsuario["UsuNome"].ToString();
+                TempUsuario.Login = readUsuario["Login"].ToString();
+                TempUsuario.Senha = readUsuario["Senha"].ToString();
+            }
+            readUsuario.Close();
+            conexao.Close();
+            return TempUsuario;
+        }
+        public void UpdateSenha(Usuario usuario)
+        {
+            conexao.Open();
+            command.CommandText = "call UpdateSenha( @Senha, @Login);";
+            command.Parameters.Add("@Senha", MySqlDbType.VarChar).Value = usuario.UsuNome;
+            command.Parameters.Add("@Login", MySqlDbType.VarChar).Value = usuario.Login;
+            command.Connection = conexao;
+            command.ExecuteNonQuery();
+            conexao.Close();
+        }
     }
 }

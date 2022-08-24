@@ -30,5 +30,15 @@ namespace AutenticacaoNetPw.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+        public ActionResult SelectLogin(string Login)
+        {
+            bool LoginExists;
+            string login = new Usuario().SelectLogin(Login);
+            if (login.Length == 0)
+                LoginExists = false;
+            else
+                LoginExists = true;
+            return Json(!LoginExists, JsonRequestBehavior.AllowGet);
+        }
     }
 }
